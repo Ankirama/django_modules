@@ -1,7 +1,0 @@
-<p class="post-meta">
-  {% for tag in object_list %}
-  <a class="post-category post-category-js" href="{% url 'blog:tagIndex' slug=tag.slug %}">
-    {{ tag }}
-  </a>
-  {% endfor %}
-</p>

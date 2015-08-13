@@ -14,13 +14,13 @@ class TagMixin(object):
 class BlogIndex(TagMixin, generic.ListView):
     queryset = models.Post.objects.published()
     template_name = "blog/index.html"
-    paginate_by = 2
+    paginate_by = 3
 
 class BlogDetail(TagMixin, generic.DetailView):
     model = models.Post
     template_name = "blog/post.html"
 
-class TagIndex(generic.ListView):
+class TagIndex(TagMixin, generic.ListView):
     template_name = "blog/index.html"
     paginate_by = 5
 

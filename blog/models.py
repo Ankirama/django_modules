@@ -18,7 +18,8 @@ class PostQuerySet(models.QuerySet):
 class Post(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, max_length=255)
-    description = models.CharField(max_length=255)
+    description_image = models.ImageField(upload_to='images/%Y/%m/%d/')
+    description = MarkdownField()
     published = models.BooleanField(default=False)
     
     body = MarkdownField()

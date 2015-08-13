@@ -1,7 +1,6 @@
 from django.contrib             import admin
-from django.db.models           import TextField
 from blog.models                import Post, Tag
-from django_markdown.admin      import MarkdownModelAdmin, AdminMarkdownWidget
+from django_markdown.admin      import MarkdownModelAdmin
 
 class PostAdmin(MarkdownModelAdmin):
     # fields display on change list
@@ -16,7 +15,6 @@ class PostAdmin(MarkdownModelAdmin):
     save_on_top = True
     # prepopulate the slug from the title - big timesaver!
     prepopulated_fields = {"slug": ("title",)}
-#    formfield_overrides = {TextField: {'widget': AdminMarkdownWidget}}
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Tag)

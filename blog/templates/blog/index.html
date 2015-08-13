@@ -1,24 +1,43 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% load django_markdown %}
 
-
-{% block blog_entries %}
+{% block blog_posts %}
 {% for object in object_list %}
-  <div class="post">
-    <h2><a href="{% url 'blog:detail' slug=object.slug %}">{{ object.title }}</a></h2>
-    <p class="post-meta">
-      {{ object.created }} tagged under 
-      {% for tag in object.tags.all %}
-      <a class="post-category post-category-js" href="{% url 'blog:tagIndex' slug=tag.slug %}">
-	{{ tag }}
-      </a>
-      {% endfor %}
-    </p>
-    {{ object.body |markdown }}
-  </div>
+  <article class="apex-format-blog wow fadeIn">
+    <div class="entry-left entry-icons">
+      <div class="entry-icon-date">
+        <div class="entry-icon-date-day">{{ object.date_created.day }}</div>
+        <div class="entry-icon-date-month">{{ object.date_created | date:"M" }}</div>
+      </div>
+      <div class="entry-icon-icon">
+        <i class="apex-icon-polaroid-1"></i>
+      </div>
+    </div><!-- .entry-left -->
+
+    <div class="entry-right">
+      <div class="entry-header">
+        <h2 class="entry-title"><a href="{% url 'blog:detail' slug=object.slug %}">{{ object.title }}</a></h2>
+          <div class="entry-meta">
+            <span><span class="entry-meta-title">Tags:</span>
+            {% for tag in object.tags.all %}
+              <a href="{% url 'blog:tagIndex' slug=tag.slug %}">{{ tag }}</a>
+            {% endfor %}
+          </span>
+        </div>
+        <div class="entry-featured">
+          <img src="{{ object.description_image.url }}">
+        </div>
+      </div>
+      <div class="entry-content clearfix" style="text-align: justify">
+        {{object.description | markdown }}
+        <a href="{% url 'blog:detail' slug=object.slug %}" class="btn apex-readmore">Read More</a>
+      </div><!-- .entry-content -->
+    </div><!-- .entry-right -->
+  </article>
 {% endfor %}
-{% endblock %}
+{% endblock%}
 
 {% block blog_tags %}
-  {% include "tags.html" with object_list=tags only %}
+  {% include "blog/tags.html" with object_list=tags only %}
 {% endblock %}
